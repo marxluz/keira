@@ -19,7 +19,7 @@ window.CE = function(tag, clas, attrs){
   return element;
 };
 
-export default class View{
+export default class{
 
   constructor(C){
   
