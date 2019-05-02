@@ -1,23 +1,18 @@
-import View from './view';
 import InputBase from './input/base';
 
-export default class extends View{
+export default class{
 
-  constructor(C){
+  constructor(){
   
-    super(C);
-
     this.elements   = [];
     this.validators = [];
   }
 
-  append(element){
+  add(element){
   
     if(element instanceof InputBase){
       this.elements.push(element);
     }
-
-    this.container.append(element);
   }
 
   add_validator(validator){
@@ -36,11 +31,11 @@ export default class extends View{
 
     let v_func = function(validator){
     
-      if(!validator) return Promise.resolve(false);
+      if(!validator) return Promise.resolve(true);
 
       return validators.is_valid(values, extra_context).then(resp => {
       
-        if(!!resp) return Promise.resolve(true);
+        if(!resp) return Promise.resolve(false);
 
         let next_validator = v_clone.pop();
 
@@ -64,7 +59,7 @@ export default class extends View{
       let args = Array.prototype.slice.call(data);
       let res  = args.indexOf(false) < 0;
 
-      if(res) return Promise.resolve(false);
+      if(!res) return Promise.resolve(false);
         
       return this.is_valid_form(extra_context);
     });

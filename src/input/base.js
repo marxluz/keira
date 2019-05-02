@@ -12,20 +12,46 @@ export default class extends View{
     this.label = null;
     this.help  = null;
     this.input = null;
+    this.value = null;
 
-    this.label_text = '';
+    this.editable = true;
+
+    this.label_text = null;
     this.help_text  = '';
 
     this.container = CE('div', 'form-group');
+  }
+
+  get_name(){
+  
+    return this.name;
+  }
+
+  get_value(){
+  
+    this.value = this.input.value;
+    return this.value;
+  }
+
+  edit(flag){
+
+    this.editable = flag;
   }
   
   set_label(text){
     
     this.label_text = text;
+  }
 
-    if(!!this.label){
-      this.label.innerText = this.label_text;
+  set_value(value){
+
+    this.value = value;
+
+    if(!!this.input){
+      return this.make();
     }
+
+    return Promise.resolve();
   }
 
   is_valid(extra_context){
@@ -53,24 +79,25 @@ export default class extends View{
   set_help(text){
   
     this.help_text = text;
-
-    if(!!this.help){
-      this.help.innerText = this.help_text;
-    }
   }
 
   make(){
   
     let group = this.container;
-    
-    this.label = this.make_label(this.label_text);
-    group.append(this.label);
+    group.innerHTML = '';
 
+    if(!!this.label_text){
+      this.label = this.make_label(this.label_text);
+      group.append(this.label);
+    }
+    
     this.input = this.make_input(this.name);
     group.append(this.input);
 
-    this.help = this.make_help(this.help_text);
-    group.append(this.help);
+    if(!!this.help_text){
+      this.help = this.make_help(this.help_text);
+      group.append(this.help);
+    }
 
     return Promise.resolve();
   }
@@ -87,6 +114,14 @@ export default class extends View{
   
     let input = CE('input', 'form-control');
     input.name = name;
+
+    if(!!this.value){
+      input.value = this.value;
+    }
+
+    if(!this.editable){
+      input.disabled = true;
+    }
 
     return input;
   }

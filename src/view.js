@@ -41,4 +41,14 @@ export default class{
     
     return this.container.innerHTML;
   }
+
+  remove(){
+    
+    this.container.remove();
+  }
+
+  render(){
+  
+    return this.make();
+  }
 }
