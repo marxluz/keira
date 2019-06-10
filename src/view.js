@@ -1,19 +1,32 @@
 
-window.CE = function(tag, clas, attrs){
+window.ce = function(){
+  
+  let args = Array.from(arguments);
+  let tag  = args.shift();
+
+  let clas  = '';
+  let attrs = [];
+
+  for(let item of args){
+
+    let type = typeof item;
+
+    if(type == 'string'){
+      
+      clas += ' ' + item;
+
+    } else if(type == 'object'){
+
+      attrs = item;
+    }
+  }
 
   let element = document.createElement(tag);
 
-  if(typeof clas == 'object'){
-    attrs = clas;
-    clas  = null;
-  }
-
-  if(!!clas) element.className = clas;
-  if(!!attrs){
+  element.className = clas;
     
-    for(let attr in attrs){
-      element.setAttribute(attr, attrs[attr]);
-    }
+  for(let attr in attrs){
+    element.setAttribute(attr, attrs[attr]);
   }
 
   return element;
@@ -24,7 +37,7 @@ export default class{
   constructor(C){
   
     this.C = C;
-    this.container = CE('div');
+    this.container = ce('div');
   }
 
   make(){

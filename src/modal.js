@@ -1,10 +1,14 @@
 import View from './view';
 
+let container = null;
+
 export default class extends View{
 
   constructor(C){
   
     super(C);
+
+    container = window.document.body;
 
     this.titleText  = null;
     this.header     = null;
@@ -22,54 +26,54 @@ export default class extends View{
 
   render(){
 
-    this.container  = CE('div', 'modal fade show');
+    this.container  = ce('div', 'modal fade show');
     this.container.onclick = (e) => {
       if(!!this.backdropClose && e.target == e.currentTarget) this.remove();
     };
 
-    let dialog = CE('div', 'modal-dialog');
+    let dialog = ce('div', 'modal-dialog');
     this.container.append(dialog);
 
-    let content = CE('div', 'modal-content');
+    let content = ce('div', 'modal-content');
     dialog.append(content);
 
-    this.header = CE('div', 'modal-header');
+    this.header = ce('div', 'modal-header');
     content.append(this.header);
 
-    this.body = CE('div', 'modal-body');
+    this.body = ce('div', 'modal-body');
     content.append(this.body);
 
-    this.footer = CE('div', 'modal-footer');
+    this.footer = ce('div', 'modal-footer');
     content.append(this.footer);
 
     return this.make().then(() => {
     
       if(!!this.titleText){
-        let title = CE('h5', 'modal-title');
+        let title = ce('h5', 'modal-title');
         this.header.append(title);
         title.innerText = this.titleText;
 
       }
 
-      let button = CE('button', 'close');
+      let button = ce('button', 'close');
       this.header.append(button);
       button.onclick = this.remove.bind(this);
 
-      let span = CE('span');
+      let span = ce('span');
       button.append(span);
       span.style.fontSiza = '16px';
       span.innerText = 'x';
 
       this.show();
-      document.body.append(this.container);
       return Promise.resolve();
     });
   }
 
   show(){
     
-    this.opacity = CE('div', 'modal-backdrop fade show');
-    document.body.append(this.opacity);
+    this.opacity = ce('div', 'modal-backdrop fade show');
+    container.append(this.container);
+    container.append(this.opacity);
 
     this.container.style.display = 'block';
   }
@@ -84,5 +88,10 @@ export default class extends View{
   
     super.remove();
     this.opacity.remove();
+  }
+
+  static set_container(cont){
+
+    container = cont;
   }
 }

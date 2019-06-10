@@ -19,7 +19,7 @@ export default class extends View{
     this.label_text = null;
     this.help_text  = '';
 
-    this.container = CE('div', 'form-group');
+    this.container = ce('div', 'form-group');
   }
 
   get_name(){
@@ -104,7 +104,7 @@ export default class extends View{
 
   make_label(text){
   
-    let label = CE('label');
+    let label = ce('label');
     label.innerText = !!text ? text : '';
 
     return label;
@@ -112,7 +112,7 @@ export default class extends View{
 
   make_input(name){
   
-    let input = CE('input', 'form-control');
+    let input = ce('input', 'form-control');
     input.name = name;
 
     if(!!this.value){
@@ -128,7 +128,7 @@ export default class extends View{
 
   make_help(text){
   
-    let small = CE('small', 'form-text text-muted');
+    let small = ce('small', 'form-text text-muted');
     small.innerText = !!text ? text : '';
 
     return small;

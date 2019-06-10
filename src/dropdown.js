@@ -14,7 +14,7 @@ export default class extends View{
 
     this.menu_show = false;
 
-    this.container = CE('div', 'dropdown');
+    this.container = ce('div', 'dropdown');
   }
 
   set_button(button){
@@ -40,7 +40,7 @@ export default class extends View{
 
   make_button(text, cls){
 
-    let button = CE('button', 'btn btn-secondary');
+    let button = ce('button', 'btn btn-secondary');
     button.type = 'button';
     if(!!text) button.innerText = text;
 
@@ -65,7 +65,7 @@ export default class extends View{
 
   make_item(label){
 
-    let button = CE('button', 'dropdown-item');
+    let button = ce('button', 'dropdown-item');
     button.type = 'button';
     if(!!label) button.innerText = label;
 
@@ -100,7 +100,7 @@ export default class extends View{
 
     this.menu_show = true;
 
-    this.opacity = CE('div');
+    this.opacity = ce('div');
     this.opacity.style.position = 'fixed';
     this.opacity.style.top = '0';
     this.opacity.style.left = '0';
@@ -128,7 +128,7 @@ export default class extends View{
 
   make_itens(){
 
-    this.menu = CE('div', 'dropdown-menu');
+    this.menu = ce('div', 'dropdown-menu');
 
     for(let item of this._itens){
       
