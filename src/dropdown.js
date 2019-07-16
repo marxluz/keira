@@ -40,7 +40,7 @@ export default class extends View{
 
   make_button(text, cls){
 
-    let button = ce('button', 'btn btn-secondary');
+    let button = ce('button', 'btn');
     button.type = 'button';
     if(!!text) button.innerText = text;
 

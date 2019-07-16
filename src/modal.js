@@ -1,14 +1,12 @@
 import View from './view';
 
-let container = null;
+let container = window.document.body;
 
 export default class extends View{
 
   constructor(C){
   
     super(C);
-
-    container = window.document.body;
 
     this.titleText  = null;
     this.header     = null;
@@ -70,10 +68,13 @@ export default class extends View{
   }
 
   show(){
+
+    console.log('show', container);
     
     this.opacity = ce('div', 'modal-backdrop fade show');
     container.append(this.container);
     container.append(this.opacity);
+
 
     this.container.style.display = 'block';
   }
@@ -92,6 +93,7 @@ export default class extends View{
 
   static set_container(cont){
 
+    console.log('set', cont);
     container = cont;
   }
 }
