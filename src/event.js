@@ -30,6 +30,15 @@ export default new class{
     this.listeners[name].push(func);
 	}
 
+  remove_all(name){
+
+    if(!this.listeners.hasOwnProperty(name)){
+      return;
+    }
+
+    delete this.listeners[name];
+  }
+
   remove(name, func){
 
     if(!this.listeners.hasOwnProperty(name)){
@@ -42,10 +51,7 @@ export default new class{
 
       let even = listeners[i];
       if(even === func){
-        
-        console.log("REMOVE EVENT", this.listeners[name].length);
         this.listeners[name].splice(i, 1);
-        console.log("REMOVIDO EVENT", this.listeners[name].length);
       }
     }
   }

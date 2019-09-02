@@ -133,4 +133,32 @@ export default class extends View{
 
     return small;
   }
+
+  init_children(){
+
+    this.child_container = ce('div');
+    this.container.after(this.child_container);
+
+    return Promise.resolve();
+  }
+
+  remove_children(){
+
+    this.child_container.innerHTML = '';
+
+    return Promise.resolve();
+  }
+
+  append(child){
+
+    this.child_container.append(child);
+  }
+
+  render(){
+
+    return this.make().then(() => {
+      
+      return this.init_children();
+    });
+  }
 }
