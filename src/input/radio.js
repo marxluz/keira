@@ -1,54 +1,70 @@
 
 import Base from './base';
 
-export default class extends Base{
+export default class extends Base {
 
-  constructor(name){
+  constructor(name) {
 
     super(name);
-    this.list   = [];
+    this.list = [];
   }
 
-  make_input(){
+  get_value(){
+
+    return this.value;
+  }
+
+  onchange(object, value) {
+    /* method for overwrite */
+  }
+
+  make_input() {
 
     let inputs = ce('div');
 
-    for(let item of this.list){
+    for (let item of this.list) {
 
-        let div = ce('div', 'mb-2');
-        inputs.append(div);
+      let div = ce('div', 'mb-2');
+      inputs.append(div);
 
-        let key = item[0];
-        let input = ce('input', 'float-left');
-        input.type = 'radio';
-        input.name = this.name;
-        input.value = key;
-        
-        div.append(input);
-
-        if(!this.editable){
-            input.disabled = 'disabled';
+      let key = item[0];
+      let input = ce('input', 'float-left');
+      input.type = 'radio';
+      input.name = this.name;
+      input.value = key;
+      input.onclick = event => {
+        let last_value = this.value;
+        this.value     = input.value;
+        if(last_value != this.value){
+          this.onchange(this, this.value);
         }
+      }
 
-        if(this.value == key){
-            input.checked = 'checked';
-        }
+      div.append(input);
 
-        let style = input.style;
-        style.width = '24px';
-        style.height = '1.4em';
-        style.boder = '0px';
+      if (!this.editable) {
+        input.disabled = 'disabled';
+      }
 
-        let label = ce('label', 'ml-2');
-        label.innerText = item[1];
+      if (this.value == key) {
+        input.checked = 'checked';
+      }
 
-        div.append(label);
+      let style = input.style;
+      style.width = '24px';
+      style.height = '1.4em';
+      style.boder = '0px';
+
+      let label = ce('label', 'ml-2');
+      label.innerText = item[1];
+
+      div.append(label);
     }
 
     return inputs;
   }
 
-  add(key, label){
+  add(key, label) {
 
     this.list.push([key, label]);
   }

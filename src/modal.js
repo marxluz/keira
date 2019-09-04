@@ -29,7 +29,7 @@ export default class extends View{
       if(!!this.backdropClose && e.target == e.currentTarget) this.remove();
     };
 
-    let dialog = ce('div', 'modal-dialog');
+    let dialog = ce('div', 'modal-dialog modal-dialog-scrollable');
     this.container.append(dialog);
 
     let content = ce('div', 'modal-content');
@@ -75,7 +75,6 @@ export default class extends View{
     container.append(this.container);
     container.append(this.opacity);
 
-
     this.container.style.display = 'block';
   }
 
@@ -93,7 +92,6 @@ export default class extends View{
 
   static set_container(cont){
 
-    console.log('set', cont);
     container = cont;
   }
 }

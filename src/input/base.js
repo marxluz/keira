@@ -134,31 +134,23 @@ export default class extends View{
     return small;
   }
 
-  init_children(){
-
-    this.child_container = ce('div');
-    this.container.after(this.child_container);
-
-    return Promise.resolve();
-  }
-
   remove_children(){
 
-    this.child_container.innerHTML = '';
+    if(!!this.child_container){
+      this.child_container.remove();
+      this.child_container = null;
+    }
 
     return Promise.resolve();
   }
 
   append(child){
 
+    if(!this.child_container){
+      this.child_container = ce('div');
+      this.container.after(this.child_container);
+    }
+
     this.child_container.append(child);
-  }
-
-  render(){
-
-    return this.make().then(() => {
-      
-      return this.init_children();
-    });
   }
 }

@@ -1,59 +1,67 @@
 import Base from './base';
 
-export default class extends Base{
+export default class extends Base {
 
-  constructor(name){
+  constructor(name) {
 
     super(name);
-    this.list   = [];
+    this.list = [];
   }
 
-  onchange(value){
+  onchange(object, value) {
     /* method for overwrite */
   }
 
-  make_input(){
+  get_value(){
+
+    return this.value;
+  }
+
+  make_input() {
 
     let inputs = ce('div', 'btn-group btn-group-toggle d-block');
     inputs.dataTaggle = 'buttons';
 
-    for(let item of this.list){
+    for (let item of this.list) {
 
-        let key  = item[0];
-        let text = item[1];
+      let key = item[0];
+      let text = item[1];
 
-        let label = ce('label', 'btn btn-secondary');
-        inputs.append(label);
+      let label = ce('label', 'btn btn-secondary');
+      inputs.append(label);
 
-        let input = ce('input');
-        input.type = 'radio';
-        input.name = this.name;
-        input.value = key;
-        input.onclick = event => {
-            this.value = input.value;
-            this.onchange(this, this.value);
+      let input = ce('input');
+      input.type = 'radio';
+      input.name = this.name;
+      input.value = key;
+      input.onclick = event => {
+        let last_value = this.value;
+        this.value     = input.value;
+        if(last_value != this.value){
+          this.onchange(this, this.value);
         }
-        
-        label.append(input);
+      }
 
-        if(!this.editable){
-            input.disabled = 'disabled';
-        }
+      label.append(input);
 
-        if(this.value == key){
-            input.checked = 'checked';
-            label.classList.add('active');
-        }
-        
-        let span = ce('span');
-        span.innerText = text;
-        label.append(span);
+      if (!this.editable) {
+        input.disabled = 'disabled';
+      }
+
+      if (this.value == key) {
+        input.checked = 'checked';
+        label.classList.add('active');
+      }
+
+      let span = ce('span');
+      span.innerText = text;
+      label.append(span);
     }
 
     return inputs;
   }
 
-  add(key, label){
+  add(key, label) {
 
     this.list.push([key, label]);
   }
