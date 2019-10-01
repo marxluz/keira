@@ -23,6 +23,10 @@ window.ce = function(){
 
   let element = document.createElement(tag);
 
+  if(!element.append){
+    element.append = element.appendChild;
+  }
+
   element.className = clas;
     
   for(let attr in attrs){
