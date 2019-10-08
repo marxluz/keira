@@ -7,6 +7,7 @@ export {default as Event} from './src/event';
 export {default as Dropdown} from './src/dropdown';
 export {default as back} from './src/back';
 export * from './src/input';
+export {default as modal} from './src/modal/index';
 
 const tools = require('./src/tools');
 export { tools }; 
