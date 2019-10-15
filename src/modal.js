@@ -91,7 +91,6 @@ export default class extends View{
   }
 
   static set_container(cont){
-
-    container = cont;
+    container = cont.body;
   }
 }

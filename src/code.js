@@ -1,5 +1,5 @@
 export default {
-  'TIMEOUT': 1,
-  'INVALID_FORM': 2,
+  'TIMEOUT': '@keira/timeout',
+  'INVALID_FORM': '@keira/form/invalid_form',
   'DISCONNECTED': 'disonnected',
 };

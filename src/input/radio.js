@@ -1,4 +1,3 @@
-
 import Base from './base';
 
 export default class extends Base {
@@ -30,6 +29,7 @@ export default class extends Base {
       let key = item[0];
       let input = ce('input', 'float-left');
       input.type = 'radio';
+      input.id = key;
       input.name = this.name;
       input.value = key;
       input.onclick = event => {
@@ -56,16 +56,22 @@ export default class extends Base {
       style.boder = '0px';
 
       let label = ce('label', 'ml-2');
+      label.setAttribute('for', key);
       label.innerText = item[1];
-
       div.append(label);
+
+      if(!!item[2]){
+        let info = ce('span', 'material-icons float-right');
+        info.innerText = 'info';
+        div.append(info);
+      }
     }
 
     return inputs;
   }
 
-  add(key, label) {
+  add(key, label, help) {
 
-    this.list.push([key, label]);
+    this.list.push([key, label, help]);
   }
 }

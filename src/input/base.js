@@ -8,11 +8,11 @@ export default class extends View{
 
     this.validators = [];
 
-    this.name  = name;
-    this.label = null;
-    this.help  = null;
-    this.input = null;
-    this.value = null;
+    this.name   = name;
+    this.label  = null;
+    this.help   = null;
+    this.input  = null;
+    this.value  = null;
 
     this.editable = true;
 
@@ -54,26 +54,70 @@ export default class extends View{
     return Promise.resolve();
   }
 
-  is_valid(extra_context){
-  
-    return new Promise((res, rej) => {
+  add_validator(validator){
 
-      let promises = [];
-      let value    = this.get_value();
+    this.validators.push(validator);
+  }
+
+  set_errors(errors){
+
+    this.clear_errors();
+    let promises = [];
+
+    for(let error of errors){
+      let div = ce('div');
+      this.error.append(div);
+      promises.push(new Promise((resolve, reject) => {
+
+        error.then(resp => { 
+          div.innerText = resp;
+          this.error.style.display = 'block';
+          resolve();
+
+        }, reject);
+      }));
+    }
+
+    return Promise.all(promises);
+  }
+
+  clear_errors(){
+    if(!!this.error){
+      this.error.innerHTML = '';
+      this.error.style.display = 'none';
+    }
+  }
+
+  async is_valid(extra_context){
+
+    this.clear_errors();
+
+    let promises = [];
+    let value    = this.get_value();
+    let errors   = [];
+
+    for(let validator of this.validators){
     
-      this.validators.forEach(validator => {
-      
-        promises.push(validator.is_valid(value, extra_context));
-      });
+      promises.push(validator.is_valid(value, extra_context).then(resp => {
 
-      Promise.all(promises).then(data => {
-      
-        let args = Array.prototype.slice.call(data);
-        let resp = args.indexOf(false) < 0;
-        res(resp);
+        if(!resp){
+          console.log('add error');
+          let msg_error = validator.get_error();
+          errors.push(msg_error);
+        }
 
-      }, rej);
-    });
+        return Promise.resolve(resp);
+      }));
+    };
+
+    let data = await Promise.all(promises);
+    let args = Array.prototype.slice.call(data);
+    let resp = args.indexOf(false) < 0;
+
+    console.log('set_errors', errors);
+    await this.set_errors(errors);
+
+    return Promise.resolve(resp);
   }
 
   set_help(text){
@@ -94,12 +138,21 @@ export default class extends View{
     this.input = this.make_input(this.name);
     group.append(this.input);
 
+    this.error = this.make_error();
+    group.append(this.error);
+
     if(!!this.help_text){
       this.help = this.make_help(this.help_text);
       group.append(this.help);
     }
 
     return Promise.resolve();
+  }
+
+  make_error(){
+    
+    let error = ce('div', 'invalid-feedback');
+    return error;
   }
 
   make_label(text){
