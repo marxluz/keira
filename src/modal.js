@@ -69,6 +69,10 @@ export default class extends View{
 
   show(){
 
+    if(!container){
+      container = window.document.body;
+    }
+
     console.log('show', container);
     
     this.opacity = ce('div', 'modal-backdrop fade show');
