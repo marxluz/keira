@@ -1,8 +1,8 @@
 import View from './view';
 
-let container = window.document.body;
+let local_document = window.document;
 
-export default class extends View{
+export default class Modal extends View{
 
   constructor(C){
   
@@ -69,9 +69,7 @@ export default class extends View{
 
   show(){
 
-    if(!container){
-      container = window.document.body;
-    }
+    let container = Modal.get_document().body;
 
     console.log('show', container);
     
@@ -94,7 +92,11 @@ export default class extends View{
     this.opacity.remove();
   }
 
-  static set_container(cont){
-    container = cont.body;
+  static set_document(document){
+    local_document = document;
+  }
+
+  static get_document(){
+    return local_document;
   }
 }

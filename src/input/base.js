@@ -1,12 +1,14 @@
 import View from '../view';
 
-export default class extends View{
+export default class Base extends View{
   
   constructor(name){
     
     super();
 
-    this.validators = [];
+    this.validators      = [];
+    this.child_elements  = [];
+    this.child_container = null;
 
     this.name   = name;
     this.label  = null;
@@ -101,7 +103,6 @@ export default class extends View{
       promises.push(validator.is_valid(value, extra_context).then(resp => {
 
         if(!resp){
-          console.log('add error');
           let msg_error = validator.get_error();
           errors.push(msg_error);
         }
@@ -110,11 +111,14 @@ export default class extends View{
       }));
     };
 
+    for(let child of this.child_elements){
+      promises.push(child.is_valid(extra_context));
+    }
+
     let data = await Promise.all(promises);
     let args = Array.prototype.slice.call(data);
     let resp = args.indexOf(false) < 0;
 
-    console.log('set_errors', errors);
     await this.set_errors(errors);
 
     return Promise.resolve(resp);
@@ -194,6 +198,8 @@ export default class extends View{
       this.child_container = null;
     }
 
+    this.child_elements = [];
+
     return Promise.resolve();
   }
 
@@ -204,6 +210,13 @@ export default class extends View{
       this.container.after(this.child_container);
     }
 
-    this.child_container.append(child);
+    if(child instanceof Base){
+      this.child_elements.push(child);
+      this.child_container.append(child.container);
+
+    }else{
+
+      this.child_container.append(child);
+    }
   }
 }
