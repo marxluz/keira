@@ -24,6 +24,19 @@ export default class Base extends View{
     this.container = ce('div', 'form-group');
   }
 
+  get_values(){
+
+    let values = {};
+
+    for(let element of this.child_elements){
+      Object.assign(values, element.get_values());
+    }
+
+    values[this.name] = this.get_value();
+
+    return values;
+  }
+
   get_name(){
   
     return this.name;

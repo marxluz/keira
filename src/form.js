@@ -80,11 +80,8 @@ export default class{
   
     let values = {};
     
-    this.elements.forEach((element) => {
-    
-      let name  = element.get_name();
-      let value = element.get_value();
-      values[name] = value;
+    this.elements.forEach(element => {
+      Object.assign(values, element.get_values());
     });
 
     return values;
