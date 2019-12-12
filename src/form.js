@@ -15,6 +15,17 @@ export default class{
     }
   }
 
+  get_elements(){
+
+    let elements = [];
+
+    for(let element of this.elements){
+      elements = elements.concat(element.get_elements());
+    }
+
+    return elements;
+  }
+
   add_validator(validator){
   
     this.validators.push(validator);

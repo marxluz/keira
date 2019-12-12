@@ -72,4 +72,19 @@ export default class extends Base {
 
     this.list.push([key, label]);
   }
+
+  display(){
+
+    let value = this.get_value();
+
+    for(let item of this.list){
+      if(item[0] == value){
+        return item[1];
+      }
+    }
+    
+    if(!value || value == ''){
+      return '---';
+    }
+  }
 }

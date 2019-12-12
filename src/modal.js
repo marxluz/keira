@@ -87,6 +87,8 @@ export default class Modal extends View{
   }
 
   remove(){
+
+    console.warn('MODAL REMOVE');
   
     super.remove();
     this.opacity.remove();

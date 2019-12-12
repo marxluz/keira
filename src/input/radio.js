@@ -15,6 +15,21 @@ export default class extends Base {
     return this.value;
   }
 
+  display(){
+
+    let value = this.get_value();
+
+    for(let item of this.list){
+      if(item[0] == value){
+        return item[1];
+      }
+    }
+    
+    if(!value || value == ''){
+      return '---';
+    }
+  }
+
   onchange(object, value) {
     /* method for overwrite */
   }

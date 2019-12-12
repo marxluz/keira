@@ -24,6 +24,18 @@ export default class Base extends View{
     this.container = ce('div', 'form-group');
   }
 
+  get_elements(){
+
+    let elements = [];
+    elements.push(this);
+
+    for(let child of this.child_elements){
+      elements = elements.concat(child.get_elements());
+    }
+
+    return elements;
+  }
+
   get_values(){
 
     let values = {};
@@ -56,6 +68,20 @@ export default class Base extends View{
   set_label(text){
     
     this.label_text = text;
+  }
+
+  focus(){
+    this.input.focus();
+  }
+
+  get_label(){
+    
+    return this.label_text;
+  }
+
+  display(){
+
+    return this.get_value();
   }
 
   set_value(value){

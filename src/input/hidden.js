@@ -9,4 +9,9 @@ export default class extends Base{
 
     return input;
   }
+
+  display(){
+
+    return '';
+  }
 }
