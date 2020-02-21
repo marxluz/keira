@@ -23,14 +23,29 @@ window.ce = function(){
 
   let element = document.createElement(tag);
 
-  if(!element.append){
-    element.append = element.appendChild;
+  if(!Element.prototype.append){
+    Element.prototype.append = Element.prototype.appendChild;
   }
 
   element.className = clas;
     
   for(let attr in attrs){
     element.setAttribute(attr, attrs[attr]);
+  }
+
+  element.append = function(child){
+    Element.prototype.append.call(this, child);
+    return this;
+  }
+
+  element.text = function(text){
+    element.innerText = text;
+    return this;
+  }
+
+  element.html = function(html){
+    element.innerHTML = html;
+    return this;
   }
 
   return element;
@@ -49,11 +64,6 @@ export default class{
     return Promise.resolve();
   }
 
-  render(){
-  
-    return this.make();
-  }
-
   toString(){
     
     return this.container.innerHTML;
@@ -64,8 +74,9 @@ export default class{
     this.container.remove();
   }
 
-  render(){
+  async render(){
   
-    return this.make();
+    await this.make();
+    return Promise.resolve(this.container);
   }
 }
