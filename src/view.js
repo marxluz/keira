@@ -54,7 +54,6 @@ window.ce = function(){
 export default class{
 
   constructor(C){
-  
     this.C = C;
     this.container = ce('div');
   }
@@ -72,6 +71,11 @@ export default class{
   remove(){
     
     this.container.remove();
+  }
+
+  append(content){
+    
+    this.container.append(content);
   }
 
   async render(){
